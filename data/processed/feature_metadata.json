@@ -1,0 +1,73 @@
+{
+  "pearson_with_label": {
+    "torque_max": -0.3686,
+    "torque_mean": -0.3949,
+    "torque_std": -0.3943,
+    "torque_peak_angle": -0.4112,
+    "snug_torque": -0.3682,
+    "total_angle": 0.282,
+    "avg_rate": -0.4859,
+    "rising_slope": -0.325,
+    "torque_fluctuation": 0.0127,
+    "angle_deviation": -0.3072,
+    "final_torque": -0.4728,
+    "hold_fluctuation": 0.2424
+  },
+  "dropped_weak": [
+    "torque_fluctuation"
+  ],
+  "dropped_collinear": [
+    {
+      "kept": "torque_mean",
+      "dropped": "torque_max",
+      "corr": 0.999
+    },
+    {
+      "kept": "torque_mean",
+      "dropped": "torque_std",
+      "corr": 0.999
+    },
+    {
+      "kept": "torque_mean",
+      "dropped": "snug_torque",
+      "corr": 0.999
+    }
+  ],
+  "selected_features": [
+    "angle_deviation",
+    "avg_rate",
+    "final_torque",
+    "hold_fluctuation",
+    "rising_slope",
+    "torque_mean",
+    "torque_peak_angle",
+    "total_angle"
+  ],
+  "n_samples": {
+    "train": 2100,
+    "val": 600,
+    "test": 300
+  },
+  "standardization": {
+    "mean": {
+      "angle_deviation": -11.772707,
+      "avg_rate": 2.119012,
+      "final_torque": 210.622194,
+      "hold_fluctuation": 11.199664,
+      "rising_slope": 5.821022,
+      "torque_mean": 158.968661,
+      "torque_peak_angle": 129.700888,
+      "total_angle": 83.694025
+    },
+    "std": {
+      "angle_deviation": 27.833842,
+      "avg_rate": 1.089696,
+      "final_torque": 183.26512,
+      "hold_fluctuation": 16.250817,
+      "rising_slope": 4.515537,
+      "torque_mean": 124.984661,
+      "torque_peak_angle": 55.621685,
+      "total_angle": 32.734804
+    }
+  }
+}

@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 数据中间产物（原始数据与特征集已提交，此两目录除外）
+# data/raw 与 data/processed 如需重新生成，运行 data/generate_data.py 与 data/preprocess.py
+
+# 编辑器与系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 日志
+logs/
+*.log
