@@ -107,6 +107,30 @@
       "tools_used": [],
       "outputs": [],
       "notes": "用户再次强调数据目录与 prompt 目录要求，并提醒上下文压缩前及时备份。本条及第9-12条即为此轮补记的压缩前备份。"
+    },
+    {
+      "seq": 14,
+      "role": "user",
+      "prompt": "公开数据集，引用链接，在readme中说清楚。自建数据集在hugging face 或modelscope 开源后，再引用链接。",
+      "tools_used": [],
+      "outputs": [],
+      "notes": "明确数据来源规范：公开数据集在 README 中引用链接并说明；自建数据集需先开源到 HF/ModelScope 再引用链接。选择 Hugging Face 平台。"
+    },
+    {
+      "seq": 15,
+      "role": "user",
+      "prompt": "提供 Hugging Face token（hf_***，此处脱敏）用于上传自建数据集。",
+      "tools_used": [],
+      "outputs": [],
+      "notes": "用户提供 HF Write 权限 token。"
+    },
+    {
+      "seq": 16,
+      "role": "assistant",
+      "prompt": "登录 HF（账号 zerozero01）、准备数据集上传包（数据集卡片 README + 原始数据 + 特征集 + 脚本）、上传至 HF 数据集仓库、回填链接到 README。",
+      "tools_used": ["Bash", "Write", "Edit"],
+      "outputs": ["Hugging Face 数据集 zerozero01/bolt-tightening-quality", "更新 data/README.md、README.md、数据资源整理说明.md"],
+      "notes": "自建数据集已开源：https://huggingface.co/datasets/zerozero01/bolt-tightening-quality （3000条，5.8MB）。修正了 task_categories 元数据。链接已回填三处文档并标注为自建数据集。"
     }
   ]
 }
