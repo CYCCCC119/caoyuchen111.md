@@ -1,0 +1,289 @@
+{
+  "task": "螺栓拧紧质量 5 类检测",
+  "feature_cols": [
+    "angle_deviation",
+    "avg_rate",
+    "final_torque",
+    "hold_fluctuation",
+    "rising_slope",
+    "torque_mean",
+    "torque_peak_angle",
+    "total_angle"
+  ],
+  "best_params": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "class_weight": "balanced",
+    "criterion": "gini",
+    "max_depth": null,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 100,
+    "n_jobs": -1,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "train": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "per_class": [
+      {
+        "label": 0,
+        "name": "合格",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 1,
+        "name": "欠拧",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 2,
+        "name": "过拧",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 3,
+        "name": "滑牙",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 4,
+        "name": "虚拧",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    ],
+    "confusion_matrix": [
+      [
+        910,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        297,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        298,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        297,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        298
+      ]
+    ],
+    "n_samples": 2100
+  },
+  "val": {
+    "accuracy": 0.9967,
+    "macro_f1": 0.9969,
+    "per_class": [
+      {
+        "label": 0,
+        "name": "合格",
+        "precision": 0.9924,
+        "recall": 1.0,
+        "f1": 0.9962
+      },
+      {
+        "label": 1,
+        "name": "欠拧",
+        "precision": 1.0,
+        "recall": 0.9882,
+        "f1": 0.9941
+      },
+      {
+        "label": 2,
+        "name": "过拧",
+        "precision": 1.0,
+        "recall": 0.9882,
+        "f1": 0.9941
+      },
+      {
+        "label": 3,
+        "name": "滑牙",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 4,
+        "name": "虚拧",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    ],
+    "confusion_matrix": [
+      [
+        260,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        84,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        84,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        85,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        85
+      ]
+    ],
+    "n_samples": 600
+  },
+  "test": {
+    "accuracy": 0.9967,
+    "macro_f1": 0.9968,
+    "per_class": [
+      {
+        "label": 0,
+        "name": "合格",
+        "precision": 0.9924,
+        "recall": 1.0,
+        "f1": 0.9962
+      },
+      {
+        "label": 1,
+        "name": "欠拧",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 2,
+        "name": "过拧",
+        "precision": 1.0,
+        "recall": 0.9762,
+        "f1": 0.988
+      },
+      {
+        "label": 3,
+        "name": "滑牙",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "label": 4,
+        "name": "虚拧",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    ],
+    "confusion_matrix": [
+      [
+        130,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        43,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        41,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        43,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        42
+      ]
+    ],
+    "n_samples": 300
+  },
+  "model_comparison": [
+    {
+      "model": "RandomForest",
+      "test_accuracy": 0.9967,
+      "test_macro_f1": 0.9968
+    },
+    {
+      "model": "SVM(RBF)",
+      "test_accuracy": 0.9667,
+      "test_macro_f1": 0.9668
+    },
+    {
+      "model": "GradientBoosting",
+      "test_accuracy": 0.9933,
+      "test_macro_f1": 0.9922
+    }
+  ],
+  "classification_report": "              precision    recall  f1-score   support\n\n          合格       0.99      1.00      1.00       130\n          欠拧       1.00      1.00      1.00        43\n          过拧       1.00      0.98      0.99        42\n          滑牙       1.00      1.00      1.00        43\n          虚拧       1.00      1.00      1.00        42\n\n    accuracy                           1.00       300\n   macro avg       1.00      1.00      1.00       300\nweighted avg       1.00      1.00      1.00       300\n"
+}

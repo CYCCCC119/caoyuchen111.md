@@ -22,3 +22,9 @@
 - **不存在同时标注「合格、欠拧、过拧、滑牙、虚拧」5 类的单一公开数据集**。本项目拟定的 5 类质量分类方案属于自建设计，核心训练数据需基于拧紧力矩-转角力学模型**模拟生成**。
 - 原 `数据资源整理说明.md` 中「国内高校公开 5 类基准数据集（1200 条）」的描述与事实不符，需在文档中更正为「自建模拟数据集 + 公开数据集参考」。
 - 公开数据集可作为参考来源（给出有效链接），不直接作为本项目 5 类检测的训练数据。
+
+## 环境补充（2026-08-30 后端开发前核查）
+
+- 可用：fastapi 0.128.8 / uvicorn 0.39.0 / pydantic 2.13.4 / joblib 1.5.3 / python-multipart 0.0.20 / httpx 0.28.1。
+- 未安装：xgboost、sqlalchemy、pymysql、influxdb、pytest。
+- 决策：模型对比用 sklearn `GradientBoostingClassifier` 替代 xgboost；后端数据层采用 CSV 文件仓库（零外部数据库依赖，开箱即用），生产环境可替换为 MySQL（表结构见 `data/business/init.sql`）；测试用 stdlib `unittest` 替代 pytest。

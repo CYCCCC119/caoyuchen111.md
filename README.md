@@ -23,6 +23,16 @@
 │   ├── generate_data.py #   数据生成脚本
 │   ├── preprocess.py    #   预处理 + 特征工程脚本
 │   └── README.md        #   数据说明文档
+├── algorithms/          # 核心算法模块（三模块 + 训练产物）
+│   ├── feature_engineering.py   #   模块一：时序特征工程
+│   ├── quality_detection.py     #   模块二：质量智能检测
+│   ├── process_optimization.py  #   模块三：工艺追溯与参数优化
+│   └── models/                  #   训练产物（模型 + 评估/优化报告）
+├── backend/             # FastAPI 后端服务
+│   ├── main.py          #   应用入口
+│   ├── requirements.txt #   依赖清单
+│   └── app/             #   配置 + 服务层 + 路由层
+├── tests/               # 单元测试（unittest）
 ├── prompt/              # AI 交流提示词追溯记录
 ├── task_plan.md         # 任务规划
 ├── findings.md          # 调研发现
@@ -47,13 +57,40 @@ python data/generate_data.py   # 生成原始数据
 python data/preprocess.py      # 预处理 + 特征工程 + 划分
 ```
 
+## 核心算法与后端
+
+对应课程三大技术方向，实现三个算法模块并封装为 FastAPI 后端服务（详见 [backend/README.md](backend/README.md)）。
+
+### 三大算法模块
+
+| 模块 | 对应课程技术 | 核心方法 | 效果 |
+|------|------------|---------|------|
+| 时序特征工程 | 工业大数据预处理与特征工程 | 清洗 → 12 维特征提取 → Pearson+共线性选择 → Z-score | 12 → 8 维 |
+| 质量智能检测 | 质量智能检测与控制 | 随机森林（主，网格搜索）+ SVM/GBDT 对比 | 测试集准确率 99.67% |
+| 工艺追溯与参数优化 | 工艺追溯与参数优化 | Pearson 关联分析 + 多目标网格搜索 | 输出最优参数组合 |
+
+### 后端接口
+
+```bash
+cd backend && pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 8000   # 文档 /docs
+```
+
+主要接口：`POST /api/detect`（单条检测）、`POST /api/detect/batch`（批量检测）、`POST /api/ingest`（数据接入）、`POST /api/trace`（多条件追溯）、`GET /api/stats`（质量统计）、`POST /api/optimize`（参数优化）、`GET /api/correlation`（关联分析）。
+
+### 测试
+
+```bash
+python -m unittest discover -s tests -p "test_*.py"
+```
+
 ## 开发计划
 
 | 阶段 | 内容 | 产出物 | 状态 |
 |------|------|--------|------|
 | 一 | 选题与需求设计 | 选题说明、方案设计 | ✅ 完成 |
 | 二 | 数据准备与数据库设计 | 数据集、预处理脚本、数据库设计 | ✅ 完成 |
-| 三 | 核心算法与后端开发 | 算法模块、后端接口 | ⏳ 待开始 |
+| 三 | 核心算法与后端开发 | 算法模块、后端接口 | ✅ 完成 |
 | 四 | 前端开发与系统联调 | 前端代码、可运行 Demo | ⏳ 待开始 |
 | 五 | 文档撰写与答辩准备 | 设计报告、演示视频、答辩 PPT | ⏳ 待开始 |
 

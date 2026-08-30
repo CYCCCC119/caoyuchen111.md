@@ -26,9 +26,27 @@
 - [x] 解决推送认证：本机 git 凭据原绑 `2670242589zero-star`，改用 PAT 绑定 `CYCCCC119` 后推送成功
 - [x] 上下文压缩前补记 prompt 记录（第 9-13 条），并同步提交备份
 
+## 2026-08-30 核心算法与后端开发阶段（已完成）
+
+- [x] 抽取特征工程模块 `algorithms/feature_engineering.py` 并重构 `preprocess.py` 复用（重跑无回归）
+- [x] 质量检测模块 `algorithms/quality_detection.py`（RF 网格搜索 + SVM/GBDT 对比）
+- [x] 训练模型产物 `algorithms/models/quality_pipeline.joblib` + `model_report.json`
+- [x] 业务追溯上下文 `data/build_business_context.py` → `data/business/tightening_context.csv`（3000 条）
+- [x] 工艺追溯与参数优化模块 `algorithms/process_optimization.py` + `optimization_report.json`
+- [x] FastAPI 后端 `backend/`（8 个 RESTful 接口，CSV 仓库零 DB 依赖）
+- [x] 单元测试 `tests/`（21 用例，unittest）
+- [x] 更新 README / data README，标记开发计划第三阶段完成
+
+## 验证结果
+
+- 随机森林：交叉验证宏F1 0.9977，测试集准确率 99.67% / 宏F1 0.9968（优于 SVM 96.67%、GBDT 99.33%）
+- 参数-特征关联物理意义正确：target_torque↔final_torque 0.70、wear↔angle_deviation -0.26
+- 21 个单元测试全部通过；uvicorn 冒烟测试 4 接口均 200 OK
+- 修复两个 bug：grade 列 float 导致 grade_ordinal 全 NaN；测试方法 cls/self 误用
+
 ## 下一阶段
 
-- 核心算法与后端开发（三大算法模块：特征工程已在数据阶段落地，质量检测分类模型 + 工艺追溯与参数优化）。
+- 前端开发与系统联调（Vue3 + Element Plus + ECharts 五大页面，对接后端 8 接口，全流程联调）。
 
 ## 备注
 

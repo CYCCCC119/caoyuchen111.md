@@ -1,26 +1,31 @@
-# 任务规划：数据准备阶段
+# 任务规划：核心算法与后端开发阶段
 
 ## 阶段目标
 
-完成课程设计「重型机械装配车间螺栓拧紧质量智能检测与工艺追溯系统」的**数据准备**工作，对应考核内容 1~3。
+完成「重型机械装配车间螺栓拧紧质量智能检测与工艺追溯系统」的**核心算法与后端开发**，对应方案设计 3.6 节的三大算法模块与 3.5 节的后端服务，实现质量检测、工艺追溯、参数优化三大能力的离线验证与接口化封装。
 
 ## 任务拆解
 
 | # | 任务 | 产出物 | 状态 |
 |---|------|--------|------|
-| 1 | 数据来源确认 | 有效数据集链接 + 数据方案 | ✅ 完成 |
-| 2 | 数据生成脚本 | `data/generate_data.py` | ✅ 完成 |
-| 3 | 预处理与特征工程脚本 | `data/preprocess.py` | ✅ 完成 |
-| 4 | 生成原始数据 | `data/raw/` | ✅ 完成 |
-| 5 | 生成预处理特征数据 | `data/processed/` | ✅ 完成 |
-| 6 | 业务数据初始化脚本 | `data/business/init.sql` | ✅ 完成 |
-| 7 | 数据说明文档 | `data/README.md` | ✅ 完成 |
-| 8 | 更新项目 README | `README.md` | ✅ 完成 |
-| 9 | AI 提示词追溯 | `prompt/` | ✅ 完成 |
+| 1 | 抽取特征工程模块 | `algorithms/feature_engineering.py` | ✅ 完成 |
+| 2 | 重构 preprocess.py 复用 | `data/preprocess.py`（import 复用，无回归） | ✅ 完成 |
+| 3 | 质量检测模块 | `algorithms/quality_detection.py` | ✅ 完成 |
+| 4 | 训练模型 + 产物 | `algorithms/models/quality_pipeline.joblib` + `model_report.json` | ✅ 完成 |
+| 5 | 业务追溯上下文数据 | `data/build_business_context.py` + `tightening_context.csv` | ✅ 完成 |
+| 6 | 工艺追溯与参数优化模块 | `algorithms/process_optimization.py` + `optimization_report.json` | ✅ 完成 |
+| 7 | FastAPI 后端 | `backend/`（config/state/schemas/services/routers/main） | ✅ 完成 |
+| 8 | 单元测试 | `tests/`（21 用例） | ✅ 完成 |
+| 9 | 测试与冒烟验证 | 21 tests OK + uvicorn 4 接口 200 | ✅ 完成 |
+| 10 | 文档与规划更新 | README / data README / prompt 追溯 | ✅ 完成 |
 
 ## 关键决策
 
-- **数据方案**：5 类质量标签（合格/欠拧/过拧/滑牙/虚拧）为自建模拟数据（基于拧紧力矩-转角力学模型），数据量小，直接提交 `/data`；公开数据集仅作参考来源，给出有效链接。
-- **存储格式**：原始时序用 JSONL（透明可读），特征数据用 CSV，业务数据用 SQL。
-- **特征工程**：12 维时域特征 → 特征选择（Pearson + 共线性）→ 8 维核心特征。
-- **更正**：原 `数据资源整理说明.md` 中「公开 5 类基准数据集」为不实描述，已更正为自建模拟数据。
+- **模型选型**：随机森林为主模型（鲁棒、可解释、免调参友好），SVM/GBDT 作对比基线；因 xgboost 未安装，用 sklearn GradientBoosting 替代，效果已满足要求（测试集 99.67%）。
+- **后端数据层**：采用 CSV 文件仓库（零外部数据库依赖，开箱即跑 Demo），生产可无缝替换 MySQL（表结构见 `data/business/init.sql`）。
+- **特征工程复用**：`clean_curve`/`extract_features` 收敛到 `algorithms/feature_engineering.py` 唯一实现，预处理与推理共用，避免逻辑漂移。
+- **测试栈**：stdlib `unittest`（pytest 未装），API 集成测试用 FastAPI TestClient（httpx 已装）。
+
+## 下一阶段
+
+- 前端开发与系统联调：Vue3 + Element Plus + ECharts 实现五大页面，对接后端 8 接口，完成全流程联调测试。

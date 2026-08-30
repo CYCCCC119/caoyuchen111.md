@@ -25,28 +25,20 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import sys
+
 BASE_DIR = Path(__file__).resolve().parent
 RAW_DIR = BASE_DIR / "raw"
 PROCESSED_DIR = BASE_DIR / "processed"
 
-# 各规格名义最终拧紧角度（用于计算「转角偏差量」特征）
-NOMINAL_ANGLE = {"M12": 95.0, "M16": 135.0, "M20": 175.0, "M24": 220.0}
-
-# 12 维时域特征定义
-FEATURE_NAMES = [
-    "torque_max",        # 力矩最大值 (N·m)
-    "torque_mean",       # 力矩平均值 (N·m)
-    "torque_std",        # 力矩标准差 (N·m)
-    "torque_peak_angle", # 力矩峰值出现角度 (deg)
-    "snug_torque",       # 贴合点扭矩 (N·m)
-    "total_angle",       # 拧紧总转角 (deg)
-    "avg_rate",          # 拧紧平均速率 (N·m/deg)
-    "rising_slope",      # 力矩上升斜率 (N·m/deg)
-    "torque_fluctuation",# 力矩波动率 (无量纲)
-    "angle_deviation",   # 转角偏差量 (deg)
-    "final_torque",      # 最终扭矩值 (N·m)
-    "hold_fluctuation",  # 扭矩保持段波动率 (N·m)
-]
+# 复用 algorithms.feature_engineering 中的特征提取实现（唯一实现，避免逻辑漂移）
+sys.path.insert(0, str(BASE_DIR.parent))
+from algorithms.feature_engineering import (  # noqa: E402
+    NOMINAL_ANGLE,
+    FEATURE_NAMES,
+    clean_curve,
+    extract_features,
+)
 
 
 def load_raw() -> pd.DataFrame:
@@ -62,66 +54,7 @@ def load_raw() -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True)
 
 
-def clean_curve(angle: np.ndarray, torque: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """数据清洗：去除空行程段 + 3σ 异常值剔除并线性插值补全。"""
-    angle = np.asarray(angle, dtype=float)
-    torque = np.asarray(torque, dtype=float)
-
-    # 1) 去除空行程段：截取从贴合点（力矩首次超过峰值 30%）到终止
-    if len(torque) == 0:
-        return angle, torque
-    thresh = 0.3 * np.max(torque)
-    snug_idx = int(np.argmax(torque >= thresh))
-    angle, torque = angle[snug_idx:], torque[snug_idx:]
-    if len(torque) < 3:
-        return angle, torque
-
-    # 2) 3σ 异常值剔除：基于一阶差分（跳变点）识别离群点，线性插值补全
-    diff = np.abs(np.diff(torque, prepend=torque[0]))
-    mu, sigma = diff.mean(), diff.std()
-    if sigma > 1e-9:
-        outliers = diff > (mu + 3 * sigma)
-        if outliers.any():
-            idx = np.where(outliers)[0]
-            valid = ~outliers
-            # 仅当两端存在有效点时进行插值，否则保留原值
-            torque_clean = torque.copy()
-            for i in idx:
-                if 0 < i < len(torque) - 1:
-                    torque_clean[i] = (torque[i - 1] + torque[i + 1]) / 2.0
-            torque = torque_clean
-
-    return angle, torque
-
-
-def extract_features(angle: np.ndarray, torque: np.ndarray, spec: str) -> dict:
-    """提取 12 维时域特征。"""
-    n = len(torque)
-    torque_max = float(np.max(torque))
-    peak_idx = int(np.argmax(torque))
-    thresh = 0.3 * torque_max
-    snug_idx = int(np.argmax(torque >= thresh)) if torque_max > 0 else 0
-
-    grad = np.gradient(torque, angle)
-    hold_start = int(n * 0.8)  # 保持段起点（末 20% 区间）
-
-    snug_torque = float(torque[snug_idx])
-    denom = float(angle[peak_idx] - angle[snug_idx]) if peak_idx > snug_idx else 1e-6
-
-    return {
-        "torque_max": torque_max,
-        "torque_mean": float(np.mean(torque)),
-        "torque_std": float(np.std(torque)),
-        "torque_peak_angle": float(angle[peak_idx]),
-        "snug_torque": snug_torque,
-        "total_angle": float(angle[-1] - angle[0]),
-        "avg_rate": float((torque_max - snug_torque) / denom),
-        "rising_slope": float(np.max(grad[: peak_idx + 1])),
-        "torque_fluctuation": float(np.std(torque) / (np.mean(torque) + 1e-6)),
-        "angle_deviation": float(angle[-1] - NOMINAL_ANGLE.get(spec, np.nan)),
-        "final_torque": float(torque[-1]),
-        "hold_fluctuation": float(np.std(torque[hold_start:])),
-    }
+# clean_curve / extract_features 已抽取至 algorithms.feature_engineering，此处通过 import 复用
 
 
 def select_features(feat_df: pd.DataFrame, y: pd.Series, threshold_corr: float = 0.1,

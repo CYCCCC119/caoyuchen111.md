@@ -34,6 +34,7 @@
 data/
 ├── generate_data.py          # 数据生成脚本（生成原始时序数据）
 ├── preprocess.py             # 预处理 + 特征工程 + 数据集划分脚本
+├── build_business_context.py # 业务追溯上下文生成（记录↔工位/人员/批次/时间）
 ├── raw/                      # 原始数据集
 │   ├── benchmark/            # 标准工况基准集
 │   │   ├── records.jsonl     #   时序数据（JSONL，每条一行）
@@ -47,7 +48,8 @@ data/
 │   ├── test.csv              # 测试集（10%，标准化）
 │   └── feature_metadata.json # 特征元信息（选择结果、标准化参数）
 ├── business/                 # 基础业务数据
-│   └── init.sql              # MySQL 建库建表与基础数据导入脚本
+│   ├── init.sql              # MySQL 建库建表与基础数据导入脚本
+│   └── tightening_context.csv # 追溯上下文（3000 条记录↔工位/人员/批次/时间）
 └── README.md                 # 本文档
 ```
 

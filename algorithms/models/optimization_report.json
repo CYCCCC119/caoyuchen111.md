@@ -1,0 +1,134 @@
+{
+  "param_vs_defect": [
+    {
+      "param": "target_torque",
+      "with_defect_rate": -0.0,
+      "with_欠拧": -0.0011,
+      "with_过拧": -0.0005,
+      "with_滑牙": 0.0003,
+      "with_虚拧": 0.0014
+    },
+    {
+      "param": "speed",
+      "with_defect_rate": 0.0174,
+      "with_欠拧": 0.002,
+      "with_过拧": 0.0181,
+      "with_滑牙": 0.0035,
+      "with_虚拧": 0.0012
+    },
+    {
+      "param": "wear",
+      "with_defect_rate": 0.1514,
+      "with_欠拧": 0.0538,
+      "with_过拧": 0.0538,
+      "with_滑牙": 0.0538,
+      "with_虚拧": 0.0538
+    },
+    {
+      "param": "temp",
+      "with_defect_rate": 0.0,
+      "with_欠拧": 0.0,
+      "with_过拧": 0.0,
+      "with_滑牙": 0.0,
+      "with_虚拧": 0.0
+    },
+    {
+      "param": "grade_ordinal",
+      "with_defect_rate": 0.1514,
+      "with_欠拧": 0.0538,
+      "with_过拧": 0.0538,
+      "with_滑牙": 0.0538,
+      "with_虚拧": 0.0538
+    }
+  ],
+  "param_vs_feature_top": [
+    {
+      "param": "target_torque",
+      "feature": "final_torque",
+      "corr": 0.7028
+    },
+    {
+      "param": "target_torque",
+      "feature": "total_angle",
+      "corr": 0.6995
+    },
+    {
+      "param": "target_torque",
+      "feature": "rising_slope",
+      "corr": 0.6441
+    },
+    {
+      "param": "target_torque",
+      "feature": "avg_rate",
+      "corr": 0.5348
+    },
+    {
+      "param": "target_torque",
+      "feature": "hold_fluctuation",
+      "corr": 0.4314
+    },
+    {
+      "param": "target_torque",
+      "feature": "angle_deviation",
+      "corr": -0.2969
+    },
+    {
+      "param": "wear",
+      "feature": "angle_deviation",
+      "corr": -0.2555
+    },
+    {
+      "param": "grade_ordinal",
+      "feature": "angle_deviation",
+      "corr": -0.2555
+    },
+    {
+      "param": "wear",
+      "feature": "rising_slope",
+      "corr": 0.2351
+    },
+    {
+      "param": "grade_ordinal",
+      "feature": "rising_slope",
+      "corr": 0.2351
+    }
+  ],
+  "optimization": {
+    "M12": {
+      "wear": 0,
+      "temp": 20.0,
+      "grade": "8.8",
+      "speed_range": "163~195 deg/s",
+      "pass_rate": 0.5638,
+      "mean_speed": 176.5,
+      "score": 0.7355
+    },
+    "M16": {
+      "wear": 0,
+      "temp": 20.0,
+      "grade": "8.8",
+      "speed_range": "137~164 deg/s",
+      "pass_rate": 0.6222,
+      "mean_speed": 150.66,
+      "score": 0.7261
+    },
+    "M20": {
+      "wear": 0,
+      "temp": 20.0,
+      "grade": "8.8",
+      "speed_range": "139~166 deg/s",
+      "pass_rate": 0.6476,
+      "mean_speed": 153.07,
+      "score": 0.7429
+    },
+    "M24": {
+      "wear": 0,
+      "temp": 20.0,
+      "grade": "8.8",
+      "speed_range": "164~197 deg/s",
+      "pass_rate": 0.5941,
+      "mean_speed": 177.71,
+      "score": 0.7564
+    }
+  }
+}
