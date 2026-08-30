@@ -44,9 +44,25 @@
 - 21 个单元测试全部通过；uvicorn 冒烟测试 4 接口均 200 OK
 - 修复两个 bug：grade 列 float 导致 grade_ordinal 全 NaN；测试方法 cls/self 误用
 
+## 2026-08-30 前端开发与系统联调阶段（已完成）
+
+- [x] 前端工程骨架 `frontend/`（Vite + Vue3 + Element Plus + ECharts + Axios，标准 npm 工程）
+- [x] 五大页面：监控大屏 Dashboard / 质量检测分析 Detection / 工艺追溯查询 Traceability / 参数优化 Optimization / 基础数据管理 DataManage
+- [x] 通用图表组件 ChartBox（ECharts 生命周期封装）、axios 接口封装、共享常量
+- [x] 提取真实样本曲线 `sampleCurves.js`（自 records.jsonl，每类一条，供示例检测）
+- [x] `npm run build` 通过；前后端联调验证（Vite /api 代理 → FastAPI 8000，8 接口全部连通）
+- [x] 更新 README.md / frontend/README.md，标记开发计划第四阶段完成
+
+## 验证结果
+
+- `npm run build` 成功（2240 模块，14s）；chunk 偏大为 ECharts/Element Plus 正常体积，不影响运行
+- 联调验证：经 Vite 代理访问后端 /api/stats、/api/correlation、/api/optimize、/api/detect、/api/detect/batch、/api/trace 均返回正确数据
+- 批量检测 5 类样本：模型正确判定 合格/欠拧/过拧/滑牙/虚拧 五类
+- 修复前端两处：`v-model="!!detail"` 非法表达式（改用独立 detailVisible）；检测接口 probabilities 键为中文类别名（前端改按名称映射）；曲线绘图改读输入曲线（后端仅返回特征不返回原始序列）
+
 ## 下一阶段
 
-- 前端开发与系统联调（Vue3 + Element Plus + ECharts 五大页面，对接后端 8 接口，全流程联调）。
+- 文档撰写与答辩准备（设计报告、演示视频、答辩 PPT）。
 
 ## 备注
 

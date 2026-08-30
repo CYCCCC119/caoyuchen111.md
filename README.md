@@ -32,6 +32,13 @@
 │   ├── main.py          #   应用入口
 │   ├── requirements.txt #   依赖清单
 │   └── app/             #   配置 + 服务层 + 路由层
+├── frontend/            # Vue3 前端（五大页面）
+│   ├── package.json     #   依赖与脚本
+│   ├── vite.config.js   #   构建 + /api 代理配置
+│   └── src/
+│       ├── views/       #   监控大屏 / 检测 / 追溯 / 优化 / 数据管理
+│       ├── components/  #   通用图表组件
+│       └── api/         #   后端接口封装
 ├── tests/               # 单元测试（unittest）
 ├── prompt/              # AI 交流提示词追溯记录
 ├── task_plan.md         # 任务规划
@@ -84,6 +91,26 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000   # 文档 /docs
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
+## 前端（Vue3 + Element Plus + ECharts）
+
+五大页面，对接后端 8 个 RESTful 接口，实现全流程可视化闭环（详见 [frontend/README.md](frontend/README.md)）：
+
+| 页面 | 对接接口 | 核心能力 |
+|------|---------|---------|
+| 拧紧质量监控大屏 | `/api/stats` `/api/trace` | 合格率/缺陷分布/工位排行 + 实时滚动 + 质量趋势 |
+| 质量检测分析 | `/api/detect` `/api/detect/batch` `/api/ingest/file` | 单条/批量检测 + 力矩-转角曲线 + 概率分布 |
+| 工艺追溯查询 | `/api/trace` | 多条件组合检索 + 反向定位详情 |
+| 工艺参数优化 | `/api/optimize` `/api/correlation` | 关联热力图 + Pareto 前沿 + 优化前后对比 |
+| 基础数据管理 | 前端 localStorage 演示 CRUD | 螺栓/工位/工艺参数/人员 增删改查 |
+
+```bash
+cd frontend && npm install
+npm run dev            # 前端 5173，经 /api 代理到后端 8000
+npm run build          # 生产构建输出 dist/
+```
+
+> 运行前需先启动后端（见上「后端接口」）。监控大屏为独立深色工业风格，其余页面为 Element Plus 浅色主题。
+
 ## 开发计划
 
 | 阶段 | 内容 | 产出物 | 状态 |
@@ -91,7 +118,7 @@ python -m unittest discover -s tests -p "test_*.py"
 | 一 | 选题与需求设计 | 选题说明、方案设计 | ✅ 完成 |
 | 二 | 数据准备与数据库设计 | 数据集、预处理脚本、数据库设计 | ✅ 完成 |
 | 三 | 核心算法与后端开发 | 算法模块、后端接口 | ✅ 完成 |
-| 四 | 前端开发与系统联调 | 前端代码、可运行 Demo | ⏳ 待开始 |
+| 四 | 前端开发与系统联调 | 前端代码、可运行 Demo | ✅ 完成 |
 | 五 | 文档撰写与答辩准备 | 设计报告、演示视频、答辩 PPT | ⏳ 待开始 |
 
 ## 过程档案
