@@ -14,6 +14,7 @@ env/
 .idea/
 .DS_Store
 Thumbs.db
+.claude/
 
 # 日志
 logs/
