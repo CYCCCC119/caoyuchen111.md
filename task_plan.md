@@ -21,6 +21,7 @@ Vue3 + Vue Router + Element Plus + ECharts + Axios，Vite 构建，开发环境�
 | 7 | 基础数据管理 | `views/DataManage.vue`（演示 CRUD，localStorage 持久化） | ✅ 完成 |
 | 8 | 构建与联调 | `npm run build` 通过 + 前后端联通验证 | ✅ 完成 |
 | 9 | 文档与追溯 | README / prompt 追溯 / 提交推送 | ✅ 完成 |
+| 10 | 一键启动脚本 | `start.bat`（相对路径、纯英文、同目录启动，自动 npm install + 开浏览器） | ✅ 完成 |
 
 ## 关键决策
 
@@ -29,6 +30,7 @@ Vue3 + Vue Router + Element Plus + ECharts + Axios，Vite 构建，开发环境�
 - **图表**：封装通用 `ChartBox.vue`（ECharts 生命周期管理），各页面只关注 option 构造，减少样板代码。
 - **基础数据管理**：后端阶段未提供基础数据写接口，本页采用前端 localStorage 演示 CRUD（预置数据对齐 init.sql 的工位/人员/螺栓/工艺基准），生产替换为 MySQL 基础数据服务。已在校验/文档中标注。
 - **监控大屏**：独立深色工业风格，其余页面统一浅色 Element Plus 主题。
+- **一键启动**：新增 `start.bat`，以 `%~dp0` 定位脚本自身目录（相对路径，无硬编码绝对路径），用 `start /D` 指定工作目录分别拉起后端 `python -m uvicorn:8000` 与前端 `npm run dev:5173`，首次运行自动 `npm install`，延时自动打开浏览器，方便整体打包迁移。
 
 ## 下一阶段
 

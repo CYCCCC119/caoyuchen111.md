@@ -52,6 +52,7 @@
 - [x] 提取真实样本曲线 `sampleCurves.js`（自 records.jsonl，每类一条，供示例检测）
 - [x] `npm run build` 通过；前后端联调验证（Vite /api 代理 → FastAPI 8000，8 接口全部连通）
 - [x] 更新 README.md / frontend/README.md，标记开发计划第四阶段完成
+- [x] 新增一键启动脚本 `start.bat`（相对路径、纯英文、同目录启动，自动 npm install + 自动开浏览器）
 
 ## 验证结果
 

@@ -91,6 +91,14 @@
       "tools_used": ["Edit", "Write"],
       "outputs": ["README.md", "frontend/README.md", "progress.md", "findings.md"],
       "notes": "开发计划第四阶段标记完成；新增前端章节与运行说明。"
+    },
+    {
+      "seq": 12,
+      "role": "user",
+      "prompt": "添加一个.bat一键启动，不要包含中文，同时启动方式不要采取指定路径启动，采用同目录下启动，方便我打包",
+      "tools_used": ["Write", "Bash", "Edit"],
+      "outputs": ["start.bat"],
+      "notes": "项目根目录新增 start.bat 一键启动：纯英文/ASCII、CRLF 行尾；以 %~dp0 定位脚本自身目录（相对路径），start /D 指定工作目录分别拉起后端 python -m uvicorn:8000 与前端 npm run dev:5173，首次运行自动 npm install，延时自动开浏览器；README 补一键启动说明。"
     }
   ]
 }
